@@ -1,7 +1,5 @@
 # AllIntelligence
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://github.com/AllPentesting/AllIntelligence)
-
 
 ### Descripción
 La herramienta AllIntelligence nos permitirá tener una visión general de posibles vectores de ataque de una organización. Como input de entrada le facilitaremos un dominio, del cual obtendremos información desde dos puntos de vista:

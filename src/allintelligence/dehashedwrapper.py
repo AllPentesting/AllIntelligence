@@ -14,7 +14,7 @@ def petition(email):
     Parametros:
         - email: Correo de la persona que se quieren obtener fugas de información
     """
-    response = requests.get('https://dehashed.com/search?query='+email, auth=requests.auth.HTTPBasicAuth(DEHASHED_USER_API,DEHASHED_API_KEY), headers={'Accept':'application/json'})
+    response = requests.get('https://dehashed.com/search?query=\'"'+email+'"\'', auth=requests.auth.HTTPBasicAuth(DEHASHED_USER_API,DEHASHED_API_KEY), headers={'Accept':'application/json'})
     try:
         return __parser(response.json())
 
@@ -28,15 +28,15 @@ def __parser(leaks):
         - leaks: JSON que nos proporciona dehashed
     """
     try:
-        dict_leaks = {}
+        #dict_leaks = {}
         array_leaks = []
         #Accedemos a la key entries donde se encuentra la información de los leaks
         for leak in leaks["entries"]:
             #Vamos añadiendo al array los leaks
             array_leaks.append({"email":leak["email"],"username":leak["username"],"password":leak["password"],"hashed_password":leak["hashed_password"],"name":leak["name"],"address":leak["address"],"ip_address":leak["ip_address"],"phone":leak["phone"],"breach":leak["obtained_from"]})
         #Agregamos al diccionario la key leaks con el array de los leaks
-        dict_leaks.update({"leaks":array_leaks})
-        return dict_leaks
+        #dict_leaks.update(array_leaks)
+        return array_leaks
 
     except Exception:
         #Si las credenciales son inválidas te devolverá un JSON con la key success que será False

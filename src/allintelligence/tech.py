@@ -1,2 +1,4 @@
 def analyze(domain):
-    return 1
+    global_dictionary = {}
+    return global_dictionary
+    

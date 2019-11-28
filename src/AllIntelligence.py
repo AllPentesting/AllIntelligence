@@ -1,5 +1,5 @@
 from flask import Flask, Response, render_template, request, session                                                                                                                      
-import allintelligence
+from allintelligence import osint, tech 
 
 app = Flask(__name__)                                                                                                                                                                          
 
@@ -10,11 +10,11 @@ def main():
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    domain = request.form['domain'] 
+    domain = request.form['domain']
 
     # To-Do: domain validation
-    tech_information = allintelligence.tech.analyze(domain)
-    osint_information = allintelligence.osint.analyze(domain)
+    tech_information = tech.analyze(domain)
+    osint_information = osint.analyze(domain)
     return render_template('report.html', tech_information=tech_information, osint_information=osint_information)
 
 

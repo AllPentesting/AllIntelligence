@@ -31,7 +31,6 @@ def __parser(emails):
     """
     try:
         dict_mails = {}
-        print(emails)
         dict_mails.update({"organization":emails["data"]["organization"]})
         array_mails = []
         #Accedemos al array de emails
@@ -50,6 +49,3 @@ def __parser(emails):
         return dict_mails
     except Exception:
         return {"error":emails["errors"][0]["details"]}
-
-if __name__ == "__main__":
-    print(petition('onbranding.es'))

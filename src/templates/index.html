@@ -4,97 +4,101 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+
+    <script src="https://kit.fontawesome.com/82049e70d8.js" crossorigin="anonymous"></script>
     <title>AllIntelligence</title>
 </head>
 
 <body class="text-center">
-    <!-- <nav class="navbar navbar-light bg-light">
-     <span class="navbar-brand mb-0 h1">AllIntelligence</span> 
-    </nav> -->
-
     <div class="container">
-
         <div class="card">
             <div class="card-header">
                 <h1><span class="blue-logo">All</span>Intelligence</h1>
             </div>
             <div class="card-body">
-                <form class="form-signin">
+                <form class="form-signin" method="POST" action="/analyze">
                     <label for="domain" class="sr-only">Domain</label>
-                    <input type="text" id="domain" class="form-control" placeholder="Domain" required autofocus>
-
+                    <input type="text" id="domain" class="form-control" name="domain" placeholder="Domain" required
+                        autofocus>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Analyze</button>
+                    <a class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapseConfig" role="button"
+                        aria-expanded="false" aria-controls="collapseConfig">
+                        Configuration
+                    </a>
+                    </p>
+                    <div class="collapse" id="collapseConfig">
+                        <div class="card card-body d-flex flex-column bd-highlight mb-3"
+                            style="overflow-y: scroll; max-height: 30vh;">
+                            <small class="text-muted">OSINT Modules</small>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchPipl" checked>
+                                <label class="custom-control-label" for="switchPipl">
+                                    Pipl module
+                                </label>
+                                <a class="blue-logo" data-toggle="modal" data-target="#modalPipl">
+                                    <i class="fas fa-cogs"></i>
+                                </a>
+                            </div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchHunter" checked>
+                                <label class="custom-control-label" for="switchHunter">
+                                    Hunter.io module
+                                </label>
+                            </div>
+                            <small class="text-muted" style="margin-top: 10px;">Technical modules</small>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchShodan" checked>
+                                <label class="custom-control-label" for="switchShodan">
+                                    Shodan module
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
-
     </div>
 
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
-
-        body {
-            display: -ms-flexbox;
-            display: -webkit-box;
-            display: flex;
-            -ms-flex-align: center;
-            -ms-flex-pack: center;
-            -webkit-box-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            justify-content: center;
-            padding-top: 40px;
-            padding-bottom: 40px;
-            /* background-color: #f5f5f5; */
 
 
-            background: url("https://www.thetabyte.eu/img/revslider/main.jpg");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
+    <!-- Modals configuración módulos -->
+    <div class="modal fade" id="modalPipl" tabindex="-1" role="dialog" aria-labelledby="modalPiplLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPiplLabel">Pipl module configuration</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Pipl configuration inputs...
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modals configuración módulos -->
 
 
-        }
-
-        .form-signin button {
-            width: 100%;
-            max-width: 330px;
-            padding: 15px;
-            margin: 20px auto;
-        }
-
-
-        .form-signin .form-control {
-            height: auto;
-            padding: 10px;
-            font-size: 16px;
-        }
-
-        .form-signin .form-control:focus {
-            z-index: 2;
-        }
-
-        .card-body {
-            margin: 60px;
-        }
-
-        .blue-logo {
-            color: #346aaa;
-        }
-    </style>
-
-
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
 </body>
 

@@ -1,0 +1,71 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+
+    background: url("/static/images/main.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
+    /*
+        https://developer.mozilla.org/es/docs/Web/CSS/backdrop-filter
+        
+    */
+    backdrop-filter: blur(2px);
+
+}
+
+.form-signin button {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: 20px auto;
+}
+
+
+.form-signin .form-control {
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.blue-logo {
+    color: #346aaa !important;
+}
+
+
+#collapseConfig{
+    text-align: left;
+}
+
+
+/* Overwrited from bootstrap */
+.btn-primary {
+    color: #fff;
+    background-color: #346aaa;
+    border-color: #346aaa;
+}
+.custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #346aaa;
+    background-color: #346aaa;
+}

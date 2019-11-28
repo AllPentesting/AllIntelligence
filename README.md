@@ -24,8 +24,8 @@ Objetivos a conseguir:
 | ------ | ------ |
 | Interfaz web con Flask |![img](http://i.imgur.com/kR8HJwg.png) |
 | API de Shodan |![img](http://i.imgur.com/kR8HJwg.png) |
-| API de Hunter.io |![img](http://i.imgur.com/kR8HJwg.png) |
-| API de Dehashed |![img](http://i.imgur.com/kR8HJwg.png) |
+| API de Hunter.io |![img](http://i.imgur.com/VJ7IoXU.png) |
+| API de Dehashed |![img](http://i.imgur.com/VJ7IoXU.png) |
 | API de MaxMind |![img](http://i.imgur.com/kR8HJwg.png) |
 | API de Pipl |![img](http://i.imgur.com/kR8HJwg.png) |
 | Testing manual |![img](http://i.imgur.com/kR8HJwg.png) |

@@ -21,13 +21,6 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-
-    /*
-        https://developer.mozilla.org/es/docs/Web/CSS/backdrop-filter
-        
-    */
-    backdrop-filter: blur(2px);
-
 }
 
 .form-signin button {
@@ -68,4 +61,20 @@ body {
     color: #fff;
     border-color: #346aaa;
     background-color: #346aaa;
+}
+.card-report{
+    margin-bottom: 15px;
+}
+
+
+.list-info>li{
+    list-style: none; /* Remove list bullets */
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+
+.progress{
+    width: 50%;
 }

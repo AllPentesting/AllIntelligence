@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+
+    <script src="https://kit.fontawesome.com/82049e70d8.js" crossorigin="anonymous"></script>
+    <title>AllIntelligence</title>
+</head>
+
+<body class="text-center" style="display:block">
+    <div class="container">
+
+        <div class="card card-report">
+            <div class="card-header">
+                <h1><span class="blue-logo">All</span>Intelligence</h1>
+            </div>
+            <div class="card-body">
+                <h3>General information</h3>
+                <ul>
+                    <li>Domain: google.es</li>
+                    <li>aaa</li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-report">
+            <div class="card-body">
+                <h3>Technical Information</h3>
+                <ul>
+                    <li>Emails...: google.es</li>
+                    <li>aaa</li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-report">
+            <div class="card-body">
+                <h3>OSINT Information</h3>
+                <div class="list-group list-group-flush">
+
+                    {% if osint_information.hunter %}
+                    <div class="list-group-item">
+                        <h4>Hunter.io</h4>
+                        {% if osint_information.hunter.error %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ osint_information.hunter.error }}
+                        </div>
+                        {% else %}
+                        <h5>Organization: {{ osint_information.hunter.organization }}</h5>
+                        Emails list:
+                        <ul class="list-info">
+                            {% for email in osint_information.hunter.emails %}
+                            <li><strong>Email:</strong> {{ email.email }}</li>
+                            <li><strong>Type:</strong> {{ email.type }}</li>
+                            <li>
+                                <strong>Confidence:</strong>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: {{ email.confidence }}% ; "
+                                        aria-valuenow="{{ email.confidence }}" aria-valuemin="0" aria-valuemax="100">
+                                        {{ email.confidence }}%</div>
+                                </div>
+                            </li>
+                            {% if email.first_name %}
+                            <li><strong>First Name:</strong> {{ email.first_name }}</li>
+                            {% endif %}
+
+                            {% if email.last_name %}
+                            <li><strong>Last Name:</strong> {{ email.last_name }}</li>
+                            {% endif %}
+
+                            {% if email.position %}
+                            <li><strong>Position:</strong> {{ email.position }}</li>
+                            {% endif %}
+
+                            {% if email.seniority %}
+                            <li><strong>Seniority:</strong> {{ email.seniority }}</li>
+                            {% endif %}
+
+                            {% if email.department %}
+                            <li><strong>Department:</strong> {{ email.department }}</li>
+                            {% endif %}
+
+                            {% if email.linkedin %}
+                            <li><strong>LinkedIn:</strong> {{ email.linkedin }} <a href="{{ email.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a> </li>
+                            {% endif %}
+
+                            {% if email.twitter %}
+                            <li><strong>Twitter:</strong> {{ email.twitter }} <a href="https://twitter.com/{{ email.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                            {% endif %}
+
+                            {% if email.phone_number %}
+                            <li><strong>Phone number:</strong> {{ email.phone_number }}</li>
+                            {% endif %}
+                            <li>
+                                <details>
+                                    <summary><strong>Sources</strong></summary>
+                                    <p>
+                                        <ul>
+                                            {% for source in email.sources %}
+                                            <li>{{ source }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </p>
+                                </details>
+                            </li>
+
+                            <li><hr></li>
+
+                            {% endfor %}
+
+                        </ul>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+
+                    <div class="list-group-item">
+                        <h4>Pipl</h4>
+                        The information is:
+                        <ul>
+                            <li>aaaaa</li>
+                            <li>bbbbbb</li>
+                        </ul>
+                    </div>
+                    <!-- <div class="list-group-item">cccc</div> -->
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

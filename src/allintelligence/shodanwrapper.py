@@ -1,20 +1,18 @@
 import shodan
-
+from allintelligence.config import SHODAN_API_KEY
+ 
 def gethost(ip):
-    SHODAN_API_KEY = ""
     api = shodan.Shodan(SHODAN_API_KEY)
 
     host_info = api.host(ip)
     '''
-
-    a['asn'] -> ASN
-    a['city'] -> Puede ser None
-
-    a['hostnames'] -> array
-    a['isp']
-    a['org']
-    a['ports'] -> Puertos abiertos array
-    a['vulns'] -> Array
+        host_info['asn'] -> ASN
+        host_info['city'] -> Puede ser None
+        host_info['hostnames'] -> array
+        host_info['isp']
+        host_info['org']
+        host_info['ports'] -> Puertos abiertos array
+        host_info['vulns'] -> Array
     '''
 
     return {

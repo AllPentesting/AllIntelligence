@@ -1,5 +1,5 @@
 import requests
-from config import PIPL_API_KEY
+from allintelligence.config import PIPL_API_KEY
 
 """
 Módulo de interconexión con la API de Pipl para obtener información sobre las identidades digitales a partir de un email

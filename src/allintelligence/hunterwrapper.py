@@ -36,7 +36,7 @@ def __parser(emails):
         #Accedemos al array de emails
         for email in emails["data"]["emails"]:
             #Creamos el diccionario del email
-            dict_mail = {"email" : email["value"], "type":email["type"],"confidence":email["confidence"],"first_name":[email["first_name"]],"last_name":[email["last_name"]],"position":email["position"],"seniority":email["seniority"],"department":email["department"],"linkedin":[email["linkedin"]],"twitter":[email["twitter"]],"phone_number":[email["phone_number"]]}
+            dict_mail = {"email" : [email["value"]], "type":email["type"],"confidence":email["confidence"],"first_name":[email["first_name"]],"last_name":[email["last_name"]],"position":email["position"],"seniority":email["seniority"],"department":email["department"],"linkedin":[email["linkedin"]],"twitter":[email["twitter"]],"phone_number":[email["phone_number"]]}
             sources = []
             #Accedemos a las fuentes desde donde se ha obtenido la información de ese correo
             for source in email["sources"]:

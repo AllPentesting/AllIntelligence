@@ -1,6 +1,6 @@
 import requests
 import json
-from config import MAXMIND_USER_API, MAXMIND_API_KEY
+from allintelligence.config import MAXMIND_USER_API, MAXMIND_API_KEY
 
 """
 Módulo de MaxMind para obtener geolocalización IP.

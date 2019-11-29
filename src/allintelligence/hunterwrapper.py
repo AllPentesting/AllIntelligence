@@ -1,7 +1,7 @@
 import requests
 import json
 import pyhunter
-from config import HUNTER_API_KEY
+from allintelligence.config import HUNTER_API_KEY
 
 """
 Módulo de hunter.io para obtener correos de una organización.
@@ -15,14 +15,11 @@ def petition(domain):
     Parametros:
         - domain: Dominio de el que se van a obtener correos.
     """
-
     response = requests.get("https://api.hunter.io/v2/domain-search?domain="+domain+"&limit=20&api_key="+HUNTER_API_KEY)
     try:
         return __parser(response.json())
     except Exception:
         return {"error":"Error with Hunter"}
-
-
 def __parser(emails):
     """
     Función encargada de interpretar el json obtenido mediante requests y devuelve un diccionario con los correos.

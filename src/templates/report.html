@@ -32,6 +32,128 @@
 
         <div class="card card-report">
             <div class="card-body">
+                <h3>OSINT Information</h3>
+                {% if osint_information.error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ osint_information.error }}
+                </div>
+                {% else %}
+                <h5>{{ osint_information.organization }}</h5>
+                Emails list:
+                <ul class="list-info">
+                    {% for email in osint_information.emails %}
+                    <li><strong>Email:</strong> {{ email.email }}</li>
+                    <li><strong>Type:</strong> {{ email.type }}</li>
+                    <li>
+                        <strong>Confidence:</strong>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: {{ email.confidence }}% ; "
+                                aria-valuenow="{{ email.confidence }}" aria-valuemin="0" aria-valuemax="100">
+                                {{ email.confidence }}%</div>
+                        </div>
+                    </li>
+                    {% if email.first_name %}
+                    <li><strong>First Name:</strong>
+                        <ul>
+                            {% for name in email.first_name %}
+                            <li>{{ name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endif %}
+
+                    {% if email.last_name %}
+                    <li><strong>Last Name:</strong>
+                        <ul>
+                            {% for lastn in email.last_name %}
+                            <li>{{ lastn }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endif %}
+
+                    {% if email.position %}
+                    <li><strong>Position:</strong> {{ email.position }}</li>
+                    {% endif %}
+
+                    {% if email.seniority %}
+                    <li><strong>Seniority:</strong> {{ email.seniority }}</li>
+                    {% endif %}
+
+                    {% if email.department %}
+                    <li><strong>Department:</strong> {{ email.department }}</li>
+                    {% endif %}
+
+                    {% if email.linkedin %}
+                    <li><strong>LinkedIn:</strong>
+                        <ul>
+                            {% for linkedin in email.linkedin %}
+                            <li>
+                                <a href="{{ linkedin }}" target="_blank">{{ linkedin }} <i
+                                        class="fab fa-linkedin"></i></a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+
+                    {% endif %}
+
+                    {% if email.twitter %}
+                    <li><strong>Twitter:</strong>
+                        <ul>
+                            {% for twitter in email.twitter %}
+                            <li>
+                                <a href="https://twitter.com/{{ twitter }}" target="_blank">{{ twitter }} <i
+                                        class="fab fa-twitter"></i></a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endif %}
+
+                    {% if email.phone_number %}
+                    <li><strong>Phone number:</strong> {{ email.phone_number }}</li>
+                    {% endif %}
+                    <li>
+                        <details>
+                            <summary><strong>Sources</strong></summary>
+                            <p>
+                                <ul>
+                                    {% for source in email.sources %}
+                                    <li>{{ source }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </p>
+                        </details>
+                    </li>
+                    {% if email.passwords %}
+                    <li>
+                        <details>
+                            <summary><strong>Passwords</strong></summary>
+                            <p>
+                                <ul>
+                                    {% for password in email.passwords %}
+                                    <li>{{ password }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </p>
+                        </details>
+                    </li>
+
+                    {% endif %}
+                    <li>
+                        <hr>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+            </div>
+        </div>
+
+
+        <div class="card card-report">
+            <div class="card-body">
                 <h3>Technical Information</h3>
                 <ul>
                     <li>Emails...: google.es</li>
@@ -41,103 +163,6 @@
                 </ul>
             </div>
         </div>
-
-        <div class="card card-report">
-            <div class="card-body">
-                <h3>OSINT Information</h3>
-                <div class="list-group list-group-flush">
-
-                    {% if osint_information.hunter %}
-                    <div class="list-group-item">
-                        <h4>Hunter.io</h4>
-                        {% if osint_information.hunter.error %}
-                        <div class="alert alert-danger" role="alert">
-                            {{ osint_information.hunter.error }}
-                        </div>
-                        {% else %}
-                        <h5>Organization: {{ osint_information.hunter.organization }}</h5>
-                        Emails list:
-                        <ul class="list-info">
-                            {% for email in osint_information.hunter.emails %}
-                            <li><strong>Email:</strong> {{ email.email }}</li>
-                            <li><strong>Type:</strong> {{ email.type }}</li>
-                            <li>
-                                <strong>Confidence:</strong>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: {{ email.confidence }}% ; "
-                                        aria-valuenow="{{ email.confidence }}" aria-valuemin="0" aria-valuemax="100">
-                                        {{ email.confidence }}%</div>
-                                </div>
-                            </li>
-                            {% if email.first_name %}
-                            <li><strong>First Name:</strong> {{ email.first_name }}</li>
-                            {% endif %}
-
-                            {% if email.last_name %}
-                            <li><strong>Last Name:</strong> {{ email.last_name }}</li>
-                            {% endif %}
-
-                            {% if email.position %}
-                            <li><strong>Position:</strong> {{ email.position }}</li>
-                            {% endif %}
-
-                            {% if email.seniority %}
-                            <li><strong>Seniority:</strong> {{ email.seniority }}</li>
-                            {% endif %}
-
-                            {% if email.department %}
-                            <li><strong>Department:</strong> {{ email.department }}</li>
-                            {% endif %}
-
-                            {% if email.linkedin %}
-                            <li><strong>LinkedIn:</strong> {{ email.linkedin }} <a href="{{ email.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a> </li>
-                            {% endif %}
-
-                            {% if email.twitter %}
-                            <li><strong>Twitter:</strong> {{ email.twitter }} <a href="https://twitter.com/{{ email.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                            {% endif %}
-
-                            {% if email.phone_number %}
-                            <li><strong>Phone number:</strong> {{ email.phone_number }}</li>
-                            {% endif %}
-                            <li>
-                                <details>
-                                    <summary><strong>Sources</strong></summary>
-                                    <p>
-                                        <ul>
-                                            {% for source in email.sources %}
-                                            <li>{{ source }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    </p>
-                                </details>
-                            </li>
-
-                            <li><hr></li>
-
-                            {% endfor %}
-
-                        </ul>
-                        {% endif %}
-                    </div>
-                    {% endif %}
-
-
-                    <div class="list-group-item">
-                        <h4>Pipl</h4>
-                        The information is:
-                        <ul>
-                            <li>aaaaa</li>
-                            <li>bbbbbb</li>
-                        </ul>
-                    </div>
-                    <!-- <div class="list-group-item">cccc</div> -->
-
-                </div>
-
-            </div>
-        </div>
-
 
 
     </div>

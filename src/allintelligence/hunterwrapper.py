@@ -33,7 +33,43 @@ def __parser(emails):
         #Accedemos al array de emails
         for email in emails["data"]["emails"]:
             #Creamos el diccionario del email
-            dict_mail = {"email" : email["value"], "type":email["type"],"confidence":email["confidence"],"first_name":[email["first_name"]],"last_name":[email["last_name"]],"position":email["position"],"seniority":email["seniority"],"department":email["department"],"linkedin":[email["linkedin"]],"twitter":[email["twitter"]],"phone_number":[email["phone_number"]]}
+            dict_mail = {"email" : [], "type": None,"confidence": None,"first_name": None,"last_name": None,"position": None,"seniority":None,"department":None,"linkedin":None,"twitter":None,"phone_number":[]}
+            
+            if(email["value"] != []):
+                dict_mail.update({"email" : [email["value"]]})
+            
+            if(email["type"] != None):
+                dict_mail.update({"type": email["type"]})
+            
+            if(email["confidence"] != None):
+                dict_mail.update({"confidence": email["confidence"]})
+            
+            if(email["first_name"] != None):
+                dict_mail.update({"first_name": [email["first_name"]]})
+            
+            if(email["last_name"] != None):
+                dict_mail.update({"last_name": [email["last_name"]]})
+            
+            if(email["position"] != None):
+                dict_mail.update({"position": email["position"]})
+            
+            if(email["seniority"] != None):
+                dict_mail.update({"seniority": email["seniority"]})
+            
+            if(email["department"] != None):
+                dict_mail.update({"department": email["department"]})
+
+            if(email["linkedin"] != None):
+                dict_mail.update({"linkedin": [email["linkedin"]]})
+            
+            if(email["twitter"] != None):
+                dict_mail.update({"twitter":[email["twitter"]]})
+            
+            if(email["phone_number"] != None):
+                dict_mail.update({"phone_number":[email["phone_number"]]})
+
+
+            
             sources = []
             #Accedemos a las fuentes desde donde se ha obtenido la información de ese correo
             for source in email["sources"]:
@@ -43,6 +79,7 @@ def __parser(emails):
             array_mails.append(dict_mail)
         #Una vez recorridos todos los correos añadimos al diccionario el array con los diferentes correos
         dict_mails.update({"emails":array_mails})
+
         return dict_mails
     except Exception:
         return {"error":emails["errors"][0]["details"]}

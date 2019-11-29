@@ -12,11 +12,14 @@ __author__: AllPentesting
 def petition(domain):
     """
     Función encargada de realizar una petición a hunter.io.
+    Parametros:
+        - domain: Dominio de el que se van a obtener correos.
     """
-
-    response = requests.get("https://api.hunter.io/v2/domain-search?domain="+str(domain)+"&limit=20&api_key="+HUNTER_API_KEY)
-    return __parser(response.json())
-
+    response = requests.get("https://api.hunter.io/v2/domain-search?domain="+domain+"&limit=20&api_key="+HUNTER_API_KEY)
+    try:
+        return __parser(response.json())
+    except Exception:
+        return {"error":"Error with Hunter"}
 def __parser(emails):
     """
     Función encargada de interpretar el json obtenido mediante requests y devuelve un diccionario con los correos.
@@ -30,7 +33,7 @@ def __parser(emails):
         #Accedemos al array de emails
         for email in emails["data"]["emails"]:
             #Creamos el diccionario del email
-            dict_mail = {"email" : email["value"], "type":email["type"],"confidence":email["confidence"],"first_name":email["first_name"],"last_name":email["last_name"],"position":email["position"],"seniority":email["seniority"],"department":email["department"],"linkedin":email["linkedin"],"twitter":email["twitter"],"phone_number":email["phone_number"]}
+            dict_mail = {"email" : email["value"], "type":email["type"],"confidence":email["confidence"],"first_name":[email["first_name"]],"last_name":[email["last_name"]],"position":email["position"],"seniority":email["seniority"],"department":email["department"],"linkedin":[email["linkedin"]],"twitter":[email["twitter"]],"phone_number":[email["phone_number"]]}
             sources = []
             #Accedemos a las fuentes desde donde se ha obtenido la información de ese correo
             for source in email["sources"]:

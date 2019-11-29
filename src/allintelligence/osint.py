@@ -7,12 +7,15 @@ def analyze(domain, config):
         dict_emails = hunterwrapper.petition(domain)
 
         i=0
-
+        for emails in dict_emails["emails"]:
+            dict_emails["emails"][i].update({"passwords":[],"usernames":[],"ips":[],"addresses":[], "jobs":[],"images":[]})
+            i = i+1
+        i=0
         #Ejecutamos pipl
         if(config['pipl'] != False):
             for emails in dict_emails["emails"]:
                 #Añadimos nuevas keys al diccionario para pipl y dehashed
-                dict_emails["emails"][i].update({"passwords":[],"usernames":[],"ips":[],"addresses":[], "jobs":[],"images":[]})
+                # dict_emails["emails"][i].update({"passwords":[],"usernames":[],"ips":[],"addresses":[], "jobs":[],"images":[]})
                 
                 for email in dict_emails["emails"][i]["email"]:
                     print(email)

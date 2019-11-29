@@ -33,15 +33,66 @@
                     {{ osint_information.error }}
                 </div>
                 {% else %}
-                <h5>{{ osint_information.organization }}</h5>
-                Emails list:
+                <h5>{% if osint_information.organization %}
+                        {{ osint_information.organization }}
+                    {% else %}
+                        <span class="text-warning">#Organization's name not found#</span>
+                    {% endif %}
+                </h5>
                 <ul class="list-info">
                     {% for email in osint_information.emails %}
-                    {% if email.images %}
+
                     <li>
-                        <img src="{{ email.images.0 }}" class="img-fluid" style="max-width: 200px;" alt="">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="{% if email.images %}{{ email.images.0 }}{% else %}https://www.um.es/image/journal/article?img_id=9070070&t=1523450291515{% endif %}"
+                                    alt="" class="img-fluid" />
+                            </div>
+                            <div class="col-md-9" style="text-align: left;">
+                                <h4>
+                                    {% if email.first_name %}
+                                    {{ email.first_name.0 }}
+                                    {% if email.last_name %}
+
+                                    {{ email.last_name.0 }}
+                                    {% endif %}
+
+                                    {% else %}
+                                    *Name not found*
+
+                                    {% endif %}
+                                </h4>
+                                <p>
+                                    {% if email.linkedin %}
+                                    <strong>LinkedIn:</strong>
+                                    <ul class="list-info">
+                                        {% for linkedin in email.linkedin %}
+                                        <li>
+                                            <a href="{{ linkedin }}" target="_blank"><i class="fab fa-linkedin"></i> {{ linkedin }}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                    {% endif %}
+
+                                    {% if email.twitter %}
+                                    <strong>Twitter:</strong>
+                                    <ul class="list-info">
+                                        {% for twitter in email.twitter %}
+                                        <li>
+                                            <a href="https://twitter.com/{{ twitter }}" target="_blank"><i class="fab fa-twitter"></i> {{ twitter }}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+
+
+                                </p>
+
+                            </div>
+                        </div>
                     </li>
-                    {% endif %}
+
                     <li><strong>Email:</strong>
                         <ul>
                             {% for mail in email.email %}
@@ -58,25 +109,6 @@
                                 {{ email.confidence }}%</div>
                         </div>
                     </li>
-                    {% if email.first_name %}
-                    <li><strong>First Name:</strong>
-                        <ul>
-                            {% for name in email.first_name %}
-                            <li>{{ name }}</li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    {% endif %}
-
-                    {% if email.last_name %}
-                    <li><strong>Last Name:</strong>
-                        <ul>
-                            {% for lastn in email.last_name %}
-                            <li>{{ lastn }}</li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    {% endif %}
 
                     {% if email.position %}
                     <li><strong>Position:</strong> {{ email.position }}</li>
@@ -88,33 +120,6 @@
 
                     {% if email.department %}
                     <li><strong>Department:</strong> {{ email.department }}</li>
-                    {% endif %}
-
-                    {% if email.linkedin %}
-                    <li><strong>LinkedIn:</strong>
-                        <ul>
-                            {% for linkedin in email.linkedin %}
-                            <li>
-                                <a href="{{ linkedin }}" target="_blank">{{ linkedin }} <i
-                                        class="fab fa-linkedin"></i></a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-
-                    {% endif %}
-
-                    {% if email.twitter %}
-                    <li><strong>Twitter:</strong>
-                        <ul>
-                            {% for twitter in email.twitter %}
-                            <li>
-                                <a href="https://twitter.com/{{ twitter }}" target="_blank">{{ twitter }} <i
-                                        class="fab fa-twitter"></i></a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
                     {% endif %}
 
                     {% if email.phone_number %}
@@ -159,14 +164,25 @@
                                     <tr>
                                         <td>
                                             {% if data.password %}
-                                            {{ data.password }}
+                                                {{ data.password }}
                                             {% else %}
-                                            <span class="text-warning">#Not decrypt#</span>
+                                                <span class="text-warning">#Not decrypt#</span>
                                             {% endif %}
-
                                         </td>
-                                        <td>{{ data.hash }}</td>
-                                        <td>{{ data.origin }}</td>
+                                        <td>
+                                            {% if data.hash %}
+                                                {{ data.hash }}
+                                            {% else %}
+                                                <span class="text-warning">#Hash not found#</span>
+                                            {% endif %}                                        
+                                        </td>
+                                        <td>
+                                            {% if data.origin %}
+                                                {{ data.origin }}
+                                            {% else %}
+                                                <span class="text-warning">#Origin not found#</span>
+                                            {% endif %}                                               
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -191,8 +207,9 @@
                         <hr>
                     </li>
                     {% endfor %}
+
+                    {% endif %}
                 </ul>
-                {% endif %}
 
             </div>
         </div>

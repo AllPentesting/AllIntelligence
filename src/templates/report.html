@@ -21,12 +21,7 @@
             </div>
             <div class="card-body">
                 <h3>General information</h3>
-                <ul>
-                    <li>Domain: google.es</li>
-                    <li>aaa</li>
-                    <li></li>
-                    <li></li>
-                </ul>
+                Domain: <strong>{{ domain }}</strong>
             </div>
         </div>
 
@@ -42,7 +37,13 @@
                 Emails list:
                 <ul class="list-info">
                     {% for email in osint_information.emails %}
-                    <li><strong>Email:</strong> {{ email.email }}</li>
+                    <li><strong>Email:</strong>
+                        <ul>
+                            {% for mail in email.email %}
+                            <li>{{ mail }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
                     <li><strong>Type:</strong> {{ email.type }}</li>
                     <li>
                         <strong>Confidence:</strong>
@@ -112,7 +113,17 @@
                     {% endif %}
 
                     {% if email.phone_number %}
-                    <li><strong>Phone number:</strong> {{ email.phone_number }}</li>
+                    <li><strong>Phone number:</strong>
+                        <ul>
+                            {% for phone_number in email.phone_number %}
+                                {% if phone_number %}
+                                <li>
+                                    {{ phone_number }}
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </li>
                     {% endif %}
                     <li>
                         <details>
@@ -130,13 +141,31 @@
                     <li>
                         <details>
                             <summary><strong>Passwords</strong></summary>
-                            <p>
-                                <ul>
-                                    {% for password in email.passwords %}
-                                    <li>{{ password }}</li>
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">Hash</th>
+                                        <th scope="col">Source</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for data in email.passwords %}
+                                    <tr>
+                                        <td>
+                                            {% if data.password %}
+                                            {{ data.password }}
+                                            {% else %}
+                                            <span class="text-warning">#Not decrypt#</span>
+                                            {% endif %}
+
+                                        </td>
+                                        <td>{{ data.hash }}</td>
+                                        <td>{{ data.origin }}</td>
+                                    </tr>
                                     {% endfor %}
-                                </ul>
-                            </p>
+                                </tbody>
+                            </table>
                         </details>
                     </li>
 

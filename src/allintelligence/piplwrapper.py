@@ -90,20 +90,17 @@ def __parser(info_pipl):
         dict_pipl.update({"jobs":array_jobs})
 
 
-        dict_images = []
+        array_images = []
 
         for img in info_pipl["person"].get("images", []):
             image = img.get("urls", None)
             if(image != None):
                 check_image = requests.get(image)
                 if check_image.status_code == 200:
-                    dict_images.append({
-                        "@last_seen": img.get("@last_seen", None),
-                        "url":img.get("urls", None)
-                })
+                    array_images.append(img.get("urls", None))
 
         #Añadimos el diccionario de images al diccionario principal de Pipl
-        dict_pipl.update({"images":dict_images})
+        dict_pipl.update({"images":array_images})
 
         array_urls = []
 

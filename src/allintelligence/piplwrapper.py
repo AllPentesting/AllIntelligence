@@ -108,11 +108,7 @@ def __parser(info_pipl):
         array_urls = []
 
         for url in info_pipl["person"].get("urls", {}):
-            array_urls.append({
-                "@category": url.get("@category",None),
-                "url": url.get("url", None)
-            })
-
+            array_urls.append([url.get("url", None)])
         array_urls = list(filter(None.__ne__, array_urls))
         if(len(array_urls) == 0):
             array_urls = []

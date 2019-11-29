@@ -37,6 +37,11 @@
                 Emails list:
                 <ul class="list-info">
                     {% for email in osint_information.emails %}
+                    {% if email.images %}
+                    <li>
+                        <img src="{{ email.images.0 }}" class="img-fluid" style="max-width: 200px;" alt="">
+                    </li>
+                    {% endif %}
                     <li><strong>Email:</strong>
                         <ul>
                             {% for mail in email.email %}
@@ -116,11 +121,11 @@
                     <li><strong>Phone number:</strong>
                         <ul>
                             {% for phone_number in email.phone_number %}
-                                {% if phone_number %}
-                                <li>
-                                    {{ phone_number }}
-                                </li>
-                                {% endif %}
+                            {% if phone_number %}
+                            <li>
+                                {{ phone_number }}
+                            </li>
+                            {% endif %}
                             {% endfor %}
                         </ul>
                     </li>
@@ -168,8 +173,20 @@
                             </table>
                         </details>
                     </li>
-
                     {% endif %}
+
+                    {% if email.images %}
+                    <li>
+                        <details>
+                            <summary><strong>Images</strong></summary>
+                            {% for image in email.images %}
+                            <img src="{{ image }}" class="img-fluid" style="max-width: 200px;" alt="">
+                            {% endfor %}
+
+                        </details>
+                    </li>
+                    {% endif %}
+
                     <li>
                         <hr>
                     </li>

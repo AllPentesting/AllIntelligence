@@ -1,10 +1,22 @@
 from allintelligence import hunterwrapper
+from allintelligence import dehashedwrapper
 
 def analyze(domain):
-    global_dictionary = {}
+    # dictionary = {}
 
     # To-Do: module control
-    global_dictionary['hunter'] =  hunterwrapper.petition(domain)
 
-    return global_dictionary
-    
+    # Primera información
+    dictionary = hunterwrapper.petition(domain)
+
+    # Recorremos los mails y buscamos en dehashed y añadimos si hay resultados
+
+    # for email in dictionary['emails']:
+    #     dictionary['emails'].update({email:{"passwords":dehashedwrapper.petition(email)}})
+
+    return dictionary
+
+
+
+def combine_dict(dictionary):
+    return dictionary

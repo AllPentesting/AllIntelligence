@@ -1,6 +1,6 @@
 import requests
 import json
-from config import DEHASHED_API_KEY, DEHASHED_USER_API
+from allintelligence.config import DEHASHED_API_KEY, DEHASHED_USER_API
 
 """
 Módulo de dehashed para obtener leaks.

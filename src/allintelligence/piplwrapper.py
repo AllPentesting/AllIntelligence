@@ -29,9 +29,11 @@ def __parser(info_pipl):
         dict_pipl = {}
 
         array_usernames = []
-
         for username in info_pipl["person"].get("usernames",[]):
             array_usernames.append(username.get("content", None))
+        array_usernames = list(filter(None.__ne__, array_usernames))
+        if(len(array_usernames) == 0):
+            array_usernames = []
 
         #Añadimos el array de usernames al diccionario principal de Pipl
         dict_pipl.update({"usernames":array_usernames})
@@ -41,7 +43,11 @@ def __parser(info_pipl):
 
         for email in info_pipl["person"].get("emails", []):
             array_emails.append(email.get("address", None))
-
+        
+        array_emails = list(filter(None.__ne__, array_emails))
+        if(len(array_emails) == 0):
+            array_emails = []
+            
         #Añadimos el diccionario de emails al diccionario principal de Pipl
         dict_pipl.update({"emails":array_emails})
 
@@ -50,6 +56,10 @@ def __parser(info_pipl):
 
         for address in info_pipl["person"].get("addresses", []):
             array_addresses.append(address.get("display", None))
+
+        array_addresses = list(filter(None.__ne__, array_addresses))
+        if(len(array_addresses) == 0):
+            array_addresses = []
 
         #Añadimos el array de addresses al diccionario principal de Pipl
         dict_pipl.update({"addresses":array_addresses})
@@ -60,6 +70,10 @@ def __parser(info_pipl):
         for phone in info_pipl["person"].get("phones", []):
             array_phones.append(phone.get("display_international", None))
 
+        array_phones = list(filter(None.__ne__, array_phones))
+        if(len(array_phones) == 0):
+            array_phones = []
+
         #Añadimos el array de phones al diccionario principal de Pipl
         dict_pipl.update({"phones":array_phones})
 
@@ -68,6 +82,9 @@ def __parser(info_pipl):
 
         for job in info_pipl["person"].get("jobs", []):
             array_jobs.append(job.get("display", None))
+        array_jobs = list(filter(None.__ne__, array_jobs))
+        if(len(array_jobs) == 0):
+            array_jobs = []
 
         #Añadimos el array de jobs al diccionario principal de Pipl
         dict_pipl.update({"jobs":array_jobs})
@@ -96,9 +113,14 @@ def __parser(info_pipl):
                 "url": url.get("url", None)
             })
 
+        array_urls = list(filter(None.__ne__, array_urls))
+        if(len(array_urls) == 0):
+            array_urls = []
+
         #Añadimos el diccionario de urls al diccionario principal de Pipl
         dict_pipl.update({"urls":array_urls})
 
         return dict_pipl
     except Exception:
+        print(info_pipl)
         return {"error":info_pipl["@http_status_code"]}

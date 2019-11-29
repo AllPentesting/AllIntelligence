@@ -1,18 +1,20 @@
 from allintelligence import hunterwrapper
 from allintelligence import dehashedwrapper
 
-def analyze(domain):
-    # dictionary = {}
-
-    # To-Do: module control
+def analyze(domain, config):
 
     # Primera información
-    dictionary = hunterwrapper.petition(domain)
+    if(config['hunter'] != False):
+        dictionary = hunterwrapper.petition(domain)
 
-    # Recorremos los mails y buscamos en dehashed y añadimos si hay resultados
+        if(config['pipl'] != False):
+            pass
 
-    # for email in dictionary['emails']:
-    #     dictionary['emails'].update({email:{"passwords":dehashedwrapper.petition(email)}})
+        if(config['dehashed'] != False):
+            pass
+
+    else:
+        dictionary = {}
 
     return dictionary
 

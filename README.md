@@ -21,6 +21,7 @@ This will download the current project and create the **AllIntelligence** folder
 
 ### Wiki
 You can find more information on the [Wiki](https://github.com/AllPentesting/AllIntelligence/wiki).
+You can find the code functions documentation in our project's Github Pages at [Github Pages LINK](https://allpentesting.github.io/AllIntelligence/index.html)
 
 ### Objectives
 

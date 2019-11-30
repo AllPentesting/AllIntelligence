@@ -1,5 +1,5 @@
 import shodan
-from config import SHODAN_API_KEY
+from allpentesting.config import SHODAN_API_KEY
 """
 Módulo de interconexión con la API de Shodan para obtener información de shodan a parti de una IP
 

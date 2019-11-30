@@ -28,8 +28,6 @@ def analyze():
         'rdp': request.form.get('switchRDP', False),
         'smtp': request.form.get('switchSMTP', False),
     }
-
-    tech_information = tech.analyze(domain)
     osint_information = osint.analyze(domain, config)
     tech_information = tech.analyze(domain, osint_information.get('mail_openrelay', None), config)
 
@@ -42,8 +40,7 @@ def report_debug():
     # osint_information = dict_emails
     osint_information = {'error':'No modules started'}
 
-    tech_information = {'city': {'confidence': 80, 'name': 'Valencia'}, 'continent': {'code': 'EU', 'name': 'Europe'}, 'country': {'name': 'Spain'}, 'location': {'accuracy_radius': 1, 'latitude': 39.4705, 'longitude': -0.3765, 'time_zone': 'Europe/Madrid'}}
-    return render_template('report.html', tech_information=tech_information, osint_information=osint_information, domain='iesgrancapitan.org')
+    return render_template('report.html', tech_information=tech_information, osint_information=osint_information, domain='onbranding.org')
 
 if __name__ == '__main__':                                                                                                                                                                     
     app.run(debug=True)

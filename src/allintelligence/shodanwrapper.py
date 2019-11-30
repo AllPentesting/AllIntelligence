@@ -1,19 +1,19 @@
 import shodan
 from allpentesting.config import SHODAN_API_KEY
 """
-Módulo de interconexión con la API de Shodan para obtener información de shodan a parti de una IP
+Shodan module to obtain information about an IP
 
 __author__:AllPentesting
 """
  
 def gethost(ip):
     """
-    Función que concecta con la API Shodan y nos devuelve una serie de información en un diccionario
-    Parametros:
-        - ip: dirección ip del dominio a consultar
+    Function that contracts with the Shodan API and returns a series of information in a dictionary
+    Parameters:
+        - ip: ip address of the domain to consult
 
-    La información que devueleve es: ASN, ISP, City, Latitude, Longitude, Country, Organization, Array de Hostnames,Array de ports,Array de vulns y Arrays de datos
-    como información del CVE, CVSS, si está verificado o información y enlaces de la vulnerabilidad
+    The information you return is: ASN, ISP, City, Latitude, Longitude, Country, Organization, Hostnames Array, Port Array, Vulnerability and Data Array
+    such as CVE information, CVSS, if verified or information and links of the vulnerability
 
     """
     api = shodan.Shodan(SHODAN_API_KEY)
@@ -21,10 +21,10 @@ def gethost(ip):
     host_info = api.host(ip)
     
         
-    #Diccionario principal con toda la información de shodan
+    # Main dictionary with all the shodan information
     dict_shodan = {}
 
-    #Comprobamos si existe cada una de las keys y sino le asignamos None para que no de fallo en caso de acceso 
+    # We check if each one of the keys exists and if not assign it None so that it does not fail in case of access
     if "ip_str" in host_info:
         dict_shodan.update({"ip":host_info['ip_str']})
     else:

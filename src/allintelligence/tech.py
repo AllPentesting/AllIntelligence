@@ -2,6 +2,7 @@ import socket
 import requests
 import dns.resolver
 import shodanwrapper
+from config import BING_API_KEY
 
 def analyze(domain):
     global_dictionary = {}
@@ -20,9 +21,10 @@ def analyze(domain):
     if domainOn:
         ip=socket.gethostbyname(str(domain)) 
 
-        #----------------------------------------CHECK Cloudflare YES|NO   
-        #Averiguamos si la IP está o no en alguno de los rangos de IPs de cloudflare
-    cloudflareOn=check_cloudflare(ip)
+    #----------------------------------------CHECK Cloudflare YES|NO   
+    #Averiguamos si la IP está o no en alguno de los rangos de IPs de cloudflare
+    if domainOn:
+        cloudflareOn=check_cloudflare(ip)
 
     if cloudflareOn:
         print ("La ip "+ip+" ES de Cloudflare")
@@ -30,17 +32,27 @@ def analyze(domain):
         print ("La ip "+ip+" NO ES de Cloudflare")
 
 
-        #----------------------------------------HOSTING COMPARITOD o DEDICADO
-        #Hacemos petición a bing con el operador IP
-        #rbing=requests.get("https://www.bing.com/search?q=ip%3A"+ip)
+    #----------------------------------------HOSTING COMPARITOD o DEDICADO
+    #Hacemos petición a bing con el operador IP
+    #API gratuita de BING https://helpcenterhq.com/knowledgebase.php?article=189
+    #rbing=requests.get("https://www.bing.com/search?q=ip%3A"+ip)
      
+   
     #Módulo de whois y contractar manualmente
 
     #Obtener manualmente X info del dominio
+    
+    #Obtenemos los emails server MX
+    mxs=[]
+    mxs=dns.resolver.query(domain, 'MX')
+    for mx in mxs:
+        print(mx)
+    #NS
 
-        #Módulo de shodan 
+
+    #Módulo de shodan 
     dict_shodan = shodanwrapper.gethost(ip)
-    print (dict_shodan)
+    #print (dict_shodan)
 
 
 
@@ -67,6 +79,22 @@ def check_cloudflare(ip):
             return True
     return False
 
+
+def check_hosting_compartido(ip):
+    headers = {"Ocp-Apim-Subscription-Key": BING_API_KEY}
+    params = {"q": "ip:"+ip+", "textDecorations": True, "textFormat": "HTML"}
+    response = requests.get("https://api.cognitive.microsoft.com/bing/v7.0/search",headers=headers, params=params)
+    search_results = response.json()
+
+    tama=len(search_results['webPages']['value'])
+
+    for i in range(0,tama):
+        (search_results['webPages']['value'][i]['url'].split("//")[1].split("/")[0])
+    
+    #Faltaría meterlo en una lista y eliminar los que son iguales
+
+
+    return True
 
 def analyze_SMTP(domai):
     pass

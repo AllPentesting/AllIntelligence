@@ -1,7 +1,24 @@
 from allintelligence import hunterwrapper, dehashedwrapper, piplwrapper
 
-def analyze(domain, config):
+"""
+Osint Module that generates the emails dictionary
+by performing different things:
+    - Hunter API
+    - Dehashed API
+    - Pipl API
 
+__author__: AllPentesting
+"""
+
+def analyze(domain, config):
+    """
+    Analysis function that launchers other modules.
+    Parameters:
+        - domain: Domain to do the analysis
+        - config: Configuration to activate o desactivate module
+    """
+
+    #Check if Hunter is checked
     if(config['hunter'] != False):
         dict_emails = hunterwrapper.petition(domain)
 
@@ -11,11 +28,9 @@ def analyze(domain, config):
             i = i+1
         i=0
 
-        #Ejecutamos pipl
+        #Check if Pipl is checked
         if(config['pipl'] != False):
             for emails in dict_emails["emails"]:
-                #Añadimos nuevas keys al diccionario para pipl y dehashed
-                # dict_emails["emails"][i].update({"passwords":[],"usernames":[],"ips":[],"addresses":[], "jobs":[],"images":[]})
                 
                 for email in dict_emails["emails"][i]["email"]:
                     print(email)
@@ -23,12 +38,12 @@ def analyze(domain, config):
                     if("@mail.com" not in email):
                         pipl = piplwrapper.petition(email)
                         if "emails" in pipl:
-                            #Añadimos los nuevos correos encontrados relacionados con esa persona
+                            # Add new emails to array 
                             for email in pipl["emails"]:
                                 if email not in dict_emails["emails"][i]["email"]:
                                     dict_emails["emails"][i]["email"].append(email)
 
-                        #Añadimos los demás campos nuevos encontrados en PIPL
+                        # We add the other new fields found in PIPL
                         if "usernames" in pipl: 
                             for username in pipl["usernames"]:
                                 if username not in dict_emails["emails"][i]["usernames"]:
@@ -60,13 +75,14 @@ def analyze(domain, config):
                                     dict_emails["emails"][i]["sources"] = dict_emails["emails"][i]["sources"] + url
                 i=i+1
 
+        # Check if Dehashed is checked
         if(config['dehashed'] != False):
             i = 0
-            #Recorremos ahora todos los correos de esa persona encontrados con Hunter y/o PIPL
+            # We now recover all emails from that person found with Hunter and / or PIPL 
             for email_list in dict_emails["emails"]:
                 for email in email_list['email']:
                     dehashed = dehashedwrapper.petition(email)
-                    #Va añadiendo la info al diccionario principal
+                    #Go adding the info to the main dictionary
                     for leak in dehashed:
                         if "username" in leak:
                             if leak["username"] is None:

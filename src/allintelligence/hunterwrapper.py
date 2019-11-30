@@ -16,7 +16,7 @@ def petition(domain):
     Parameters:
             - domain: Domain from which mails will be obtained.
     """
-    response = requests.get("https://api.hunter.io/v2/domain-search?domain="+domain+"&limit=20&api_key="+HUNTER_API_KEY)
+    response = requests.get("https://api.hunter.io/v2/domain-search?domain="+domain+"&limit=5&api_key="+HUNTER_API_KEY)
     try:
         return __parser(response.json())
     except Exception:

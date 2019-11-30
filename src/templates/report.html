@@ -133,7 +133,9 @@
                             {% for phone_number in email.phone_number %}
                             {% if phone_number %}
                             <li>
-                                {{ phone_number }}
+                                    {% set phone_redacter = phone_number[0:6] + 'XXXX' %}
+
+                                {{ phone_redacter }}
                             </li>
                             {% endif %}
                             {% endfor %}
@@ -227,11 +229,11 @@
                 <h3>Technical Information</h3>
                 <ul class="list-info">
                     {% if tech_information.cloudflare is defined %}
-                    <li><strong>Cloudflare:</strong> {{ tech_information.cloudflare }}</li>
+                    <li><strong>Domain is behind Cloudflare:</strong> {{ tech_information.cloudflare }}</li>
                     {% endif %}
 
                     {% if tech_information.domainOn is defined %}
-                        <li><strong>Active:</strong> {{ tech_information.domainOn }}</li>
+                        <li><strong>Domain is active:</strong> {{ tech_information.domainOn }}</li>
                     {% endif %}
 
                     {% if tech_information.open_relay is defined %}
@@ -267,7 +269,9 @@
                     {% endif %}
 
                     {% if tech_information.shodan %}
+                            <li><strong>IP: </strong>{{ tech_information.shodan.ip }}</li>
                             <li><strong>ISP: </strong>{{ tech_information.shodan.isp }}</li>
+                            <li><strong>ASN: </strong>{{ tech_information.shodan.asn }}</li>
                             <li><strong>Active ports:</strong> </li>
                             {% for port in tech_information.shodan.data %}
                             <li><strong>Port:</strong> {{ port.port }}</li>
@@ -281,11 +285,6 @@
                             <li><hr></li>
                         {% endfor %}
                     {% endif %}
-
-
-
-
-
 
                 </ul>
             </div>

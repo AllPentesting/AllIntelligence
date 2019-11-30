@@ -6,6 +6,7 @@ from ftplib import FTP
 
 from allintelligence import shodanwrapper
 from allintelligence import maxmindwrapper
+from allintelligence.config import BING_API_KEY
 
 """
 Tech module that generates the technical dictionary 

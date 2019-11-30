@@ -2,7 +2,7 @@ import requests
 from allintelligence.config import PIPL_API_KEY
 
 """
-Módulo de interconexión con la API de Pipl para obtener información sobre las identidades digitales a partir de un email
+Pipl module to obtain information about a person from an email
 
 __author__:AllPentesting
 """
@@ -10,22 +10,21 @@ __author__:AllPentesting
 
 def petition(email):
     """
-    Función que concecta con la API Pipl y nos devuelve una serie de información a partir de de un email que se le pasa
-    Parametros:
-        - email: correo de la persona que buscamos información
-
+    Function that contracts with the API Pipl and returns a series of information from an email that is passed
+    Parameters:
+        - email: mail of the person we are looking for information
     """
     response = requests.get("https://api.pipl.com/search/?email="+email+"&key="+PIPL_API_KEY)
     return __parser(response.json())
 
 def __parser(info_pipl):    
     """
-    Función encargada de interpretar el json obtenido mediante requests y devuelve un diccionario con los datos de Pypl.
-    Parametros:
-        - info_pipl: JSON que nos proporciona pipl
+    Function responsible for interpreting the json obtained through requests and returns a dictionary with Pypl data.
+    Parameters:
+        - info_pipl: JSON that gives us pipl
     """
     try:
-        #Diccionario principal con toda la información de pipl
+        # Main dictionary with all the pipl information
         dict_pipl = {}
 
         array_usernames = []
@@ -35,7 +34,7 @@ def __parser(info_pipl):
         if(len(array_usernames) == 0):
             array_usernames = []
 
-        #Añadimos el array de usernames al diccionario principal de Pipl
+        # We add the array of usernames to the main Pipl dictionary
         dict_pipl.update({"usernames":array_usernames})
 
 
@@ -48,7 +47,7 @@ def __parser(info_pipl):
         if(len(array_emails) == 0):
             array_emails = []
             
-        #Añadimos el diccionario de emails al diccionario principal de Pipl
+        # We add the email dictionary to the main Pipl dictionary
         dict_pipl.update({"emails":array_emails})
 
 
@@ -61,7 +60,7 @@ def __parser(info_pipl):
         if(len(array_addresses) == 0):
             array_addresses = []
 
-        #Añadimos el array de addresses al diccionario principal de Pipl
+        # We add the array of addresses to the main Pipl dictionary
         dict_pipl.update({"addresses":array_addresses})
 
 
@@ -74,7 +73,7 @@ def __parser(info_pipl):
         if(len(array_phones) == 0):
             array_phones = []
 
-        #Añadimos el array de phones al diccionario principal de Pipl
+        # We add the array of phones to the main Pipl dictionary
         dict_pipl.update({"phones":array_phones})
 
 
@@ -86,7 +85,7 @@ def __parser(info_pipl):
         if(len(array_jobs) == 0):
             array_jobs = []
 
-        #Añadimos el array de jobs al diccionario principal de Pipl
+        # We add the array of jobs to the main Pipl dictionary
         dict_pipl.update({"jobs":array_jobs})
 
 
@@ -99,7 +98,7 @@ def __parser(info_pipl):
                 if check_image.status_code == 200:
                     array_images.append(img.get("urls", None))
 
-        #Añadimos el diccionario de images al diccionario principal de Pipl
+        # We add the images dictionary to the main Pipl dictionary
         dict_pipl.update({"images":array_images})
 
         array_urls = []
@@ -110,7 +109,7 @@ def __parser(info_pipl):
         if(len(array_urls) == 0):
             array_urls = []
 
-        #Añadimos el diccionario de urls al diccionario principal de Pipl
+        # We add the urls dictionary to the main Pipl dictionary
         dict_pipl.update({"urls":array_urls})
 
         return dict_pipl

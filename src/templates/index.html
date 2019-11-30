@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+
+    <script src="https://kit.fontawesome.com/82049e70d8.js" crossorigin="anonymous"></script>
+    <title>AllIntelligence</title>
+</head>
+
+<body class="text-center">
+
+    <div class="container">
+        <noscript>
+            <div class="alert alert-danger" role="alert">
+                You need JavaScript to use this web
+            </div>
+        </noscript>
+        <div class="card">
+            <div class="card-header">
+                <h1><span class="blue-logo">All</span>Intelligence</h1>
+            </div>
+            <div class="card-body">
+                <form class="form-signin" method="POST" action="/analyze">
+                    <label for="domain" class="sr-only">Domain</label>
+                    <input type="text" id="domain"
+                        pattern="^(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?$"
+                        class="form-control" name="domain" placeholder="Domain" required autofocus>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Analyze</button>
+                    <a class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapseConfig" role="button"
+                        aria-expanded="false" aria-controls="collapseConfig">
+                        Configuration
+                    </a>
+                    </p>
+                    <div class="collapse" id="collapseConfig">
+                        <div class="card card-body d-flex flex-column bd-highlight mb-3"
+                            style="overflow-y: scroll; max-height: 30vh;">
+                            <small class="text-muted">OSINT Modules</small>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" name="switchHunter" class="custom-control-input"
+                                    id="switchHunter" checked>
+                                <label class="custom-control-label" for="switchHunter">
+                                    Hunter.io module
+                                </label>
+                            </div>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" name="switchPipl" id="switchPipl"
+                                    checked data-toggle="popover" title="You can't activate this module"
+                                    data-trigger="manual" data-content="This module require the Email Hunter module">
+                                <label class="custom-control-label" for="switchPipl">
+                                    Pipl module
+                                </label>
+                            </div>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" name="switchDehashed"
+                                    id="switchDehashed" checked data-toggle="popover"
+                                    title="You can't activate this module" data-trigger="manual"
+                                    data-content="This module require the Email Hunter module">
+                                <label class="custom-control-label" for="switchDehashed">
+                                    Dehashed module
+                                </label>
+                            </div>
+
+
+                            <small class="text-muted" style="margin-top: 10px;">Technical modules</small>
+
+                            <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="switchCloudflare" name="switchCloudflare" checked>
+                                    <label class="custom-control-label" for="switchCloudflare">
+                                        Cloudflare module
+                                    </label>
+                                </div>
+    
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchShodan" name="switchShodan" checked>
+                                <label class="custom-control-label" for="switchShodan">
+                                    Shodan module
+                                </label>
+                            </div>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchMaxmind" name="switchMaxmind" checked>
+                                <label class="custom-control-label" for="switchMaxmind">
+                                    Maxmind module
+                                </label>
+                            </div>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchRDP" name="switchRDP" checked>
+                                <label class="custom-control-label" for="switchRDP">
+                                    RDP module
+                                </label>
+                            </div>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchFTP" name="switchFTP" checked>
+                                <label class="custom-control-label" for="switchFTP">
+                                    FTP module
+                                </label>
+                            </div>
+
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switchSMTP" name="switchSMTP" checked>
+                                <label class="custom-control-label" for="switchSMTP">
+                                    SMTP module
+                                </label>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+
+
+
+    <script>
+        $(function () {
+            // Inicialización de popovers
+            $('[data-toggle="popover"]').popover()
+        })
+
+        // Comprobación checks
+        $('input:checkbox').on('change', function (event) {
+            $this = $(this);
+            if (($this.is(':checked') == true) && ($this[0].id == 'switchDehashed' || $this[0].id ==
+                    'switchPipl') && ($('#switchHunter').is(':checked') == false)) {
+                $this.popover('show');
+                setTimeout(function () {
+                    $('[data-toggle="popover"]').popover('hide');
+                }, 2000);
+                $this.prop('checked', false);
+            } else if ($this[0].id == 'switchHunter') {
+                $('#switchDehashed').prop('checked', false)
+                $('#switchPipl').prop('checked', false)
+            }
+        });
+    </script>
+</body>
+
+</html>

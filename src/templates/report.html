@@ -46,7 +46,6 @@
                         <div class="card">
                             <div class="card-body">
 
-
                                 <div class="row">
                                     <div class="col-md-3">
                                         <img src="{% if email.images %}{{ email.images.0 }}{% else %}https://www.um.es/image/journal/article?img_id=9070070&t=1523450291515{% endif %}"
@@ -227,13 +226,65 @@
             <div class="card-body">
                 <h3>Technical Information</h3>
                 <ul class="list-info">
-                    <li><strong>City: </strong>{{ tech_information.city.name }}</li>
-                    <li><strong>Fiablidad: </strong> {{ tech_information.city.confidence }}%</li>
-                    <li><strong>Continent:</strong> {{ tech_information.continent.name }}</li>
-                    <li><strong>Country:</strong> {{ tech_information.country.name }}</li>
-                    <li><strong>Latitude:</strong> {{ tech_information.location.latitude }}</li>
-                    <li><strong>Longitude:</strong> {{ tech_information.location.longitude }}</li>
-                    <li><strong>Accuracy:</strong> {{ tech_information.location.accuracy_radius }}</li>
+                    {% if tech_information.cloudflare is defined %}
+                    <li><strong>Cloudflare:</strong> {{ tech_information.cloudflare }}</li>
+                    {% endif %}
+
+                    {% if tech_information.domainOn is defined %}
+                        <li><strong>Active:</strong> {{ tech_information.domainOn }}</li>
+                    {% endif %}
+
+                    {% if tech_information.open_relay is defined %}
+                        <li><strong>Open Relay test:</strong> {{ tech_information.open_relay }}</li>
+                    {% endif %}
+
+                    {% if tech_information.rdp is defined %}
+                        <li><strong>RDP:</strong> {{ tech_information.rdp }}</li>
+                    {% endif %}
+
+                    {% if tech_information.ftp is defined %}
+                        <li><strong>FTP Anonymous:</strong> {{ tech_information.ftp.anonymous }}</li>
+                    {% endif %}
+
+                    {% if tech_information.maxmind %}
+                        {% if tech_information.maxmind.city %}
+                        <li><strong>City: </strong>{{ tech_information.maxmind.city.name }}</li>
+                        <li><strong>Fiablidad: </strong> {{ tech_information.maxmind.city.confidence }}%</li>
+                        {% endif %}
+                        {% if tech_information.maxmind.continent %}
+                        <li><strong>Continent:</strong> {{ tech_information.maxmind.continent.name }}</li>
+                        {% endif %}
+
+                        {% if tech_information.maxmind.country %}
+                        <li><strong>Country:</strong> {{ tech_information.maxmind.country.name }}</li>
+                        {% endif %}
+
+                        {% if tech_information.maxmind.location %}
+                        <li><strong>Latitude:</strong> {{ tech_information.maxmind.location.latitude }}</li>
+                        <li><strong>Longitude:</strong> {{ tech_information.maxmind.location.longitude }}</li>
+                        <li><strong>Accuracy:</strong> {{ tech_information.maxmind.location.accuracy_radius }}</li>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if tech_information.shodan %}
+                            <li><strong>ISP: </strong>{{ tech_information.shodan.isp }}</li>
+                            <li><strong>Active ports:</strong> </li>
+                            {% for port in tech_information.shodan.data %}
+                            <li><strong>Port:</strong> {{ port.port }}</li>
+                            {% if port.vulns %}
+                            <ul>
+                            {% for vuln in port.vulns %}
+                                <li>{{ vuln }}</li>
+                            {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <li><hr></li>
+                        {% endfor %}
+                    {% endif %}
+
+
+
+
 
 
                 </ul>

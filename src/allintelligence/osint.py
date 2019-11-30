@@ -26,6 +26,8 @@ def analyze(domain, config):
         for emails in dict_emails["emails"]:
             dict_emails["emails"][i].update({"passwords":[],"usernames":[],"ips":[],"addresses":[], "jobs":[],"images":[]})
             i = i+1
+            if i == 0:
+                dict_emails['mail_openrelay'] = emails[0]
         i=0
 
         #Check if Pipl is checked

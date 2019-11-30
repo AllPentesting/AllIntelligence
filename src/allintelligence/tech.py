@@ -4,8 +4,9 @@ import dns.resolver
 import smtplib
 from ftplib import FTP
 
-import allpentesting.shodanwrapper
-import allpentesting.maxmindwrapper
+from allintelligence import shodanwrapper
+from allintelligence import maxmindwrapper
+
 """
 Tech module that generates the technical dictionary 
 by performing different tests:
@@ -18,8 +19,7 @@ by performing different tests:
 
 __author__: AllPentesting
 """
-
-def analyze(domain,email, config):
+def analyze(domain, email, config):
     """
     Analysis function that launches other modules and functions.
     Parameters:
@@ -27,7 +27,7 @@ def analyze(domain,email, config):
         - email: Email to be used in Open Relay testing
         - config: Configuration to activate o desactivate module
     """
-    dict_tech = {"domain":domain}
+    dict_tech = {"domain": domain}
 
     """
     DNS RESOLUTION

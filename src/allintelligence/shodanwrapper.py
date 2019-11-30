@@ -1,12 +1,12 @@
 import shodan
-from allpentesting.config import SHODAN_API_KEY
+from allintelligence.config import SHODAN_API_KEY
 """
 Shodan module to obtain information about an IP
 
 __author__:AllPentesting
 """
  
-def gethost(ip):
+def petition(ip):
     """
     Function that contracts with the Shodan API and returns a series of information in a dictionary
     Parameters:

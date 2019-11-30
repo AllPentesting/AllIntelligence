@@ -19,6 +19,7 @@ cd AllIntelligence
 ```
 This will download the current project and create the **AllIntelligence** folder with the tool.
 
+### Wiki
 You can find more information on the [Wiki](https://github.com/AllPentesting/AllIntelligence/wiki).
 
 ### Objectives

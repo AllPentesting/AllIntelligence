@@ -1,6 +1,4 @@
 import requests
-import json
-import pyhunter
 from allintelligence.config import HUNTER_API_KEY
 
 """
@@ -23,9 +21,9 @@ def petition(domain):
         return {"error":"Error with Hunter"}
 def __parser(emails):
     """
-    Función encargada de interpretar el json obtenido mediante requests y devuelve un diccionario con los correos.
-    Parametros:
-        - emails: JSON que nos proporciona hunter.io
+    Function responsible for interpreting the json obtained through requests and returns a dictionary with the mails.
+    Parameters:
+    - emails: JSON provided by hunter.io
     """
     try:
         dict_mails = {}
@@ -70,7 +68,6 @@ def __parser(emails):
                 dict_mail.update({"phone_number":[email["phone_number"]]})
 
 
-            
             sources = []
             # We access the sources from where the information in that email was obtained
             for source in email["sources"]:

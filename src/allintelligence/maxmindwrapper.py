@@ -1,5 +1,4 @@
 import requests
-import json
 from allintelligence.config import MAXMIND_USER_API, MAXMIND_API_KEY
 
 """

@@ -1,5 +1,5 @@
 import shodan
-from allpentesting.config import SHODAN_API_KEY
+from allintelligence.config import SHODAN_API_KEY
 """
 Shodan module to obtain information about an IP
 

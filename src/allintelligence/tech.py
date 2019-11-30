@@ -46,12 +46,20 @@ def analyze(domain, email, config):
         ip=socket.gethostbyname(str(domain)) 
 
     # Check that cloudflare is active
-    if(config['cloudflare'] != False):
-        if __check_cloudflare(ip):
-            dict_tech.update({"cloudflare" : True})
-        else:
-            dict_tech.update({"cloudflare" : False})
+    dict_cloudflare={}
+    dict_cloudflare=__check_cloudflare(domain, ip)
 
+    dict_tech.update({"cloudflare" : dict_cloudflare["cloudflare"]})
+    dict_tech.update({"nameservers" : dict_cloudflare["nameservers"]})
+
+
+    # Check if the domain is in a share hosting
+    dict_share_hosting={}
+    dict_share_hosting=__check_share_hosting(ip)
+    
+    dict_tech.update({"share" : dict_share_hosting['share']})
+    dict_tech.update({"share_size" : dict_share_hosting['size']})
+    dict_tech.update({"share_hosting" : dict_share_hosting['domains']})
 
     # Shodan module
     if(config['shodan'] != False):
@@ -84,13 +92,28 @@ def analyze(domain, email, config):
     return dict_tech
 
 
-def __check_cloudflare(ip):
+def __check_cloudflare(domain, ip):
     """
-    We check if the IP is in one of the CloudFlare IP ranges
-    Parameters:
-        - ip: IP address to check if it is in the CloudFlare range
-    """
+	Function to check if a domain is behind cloudflare
+	Parameters: 
+        -domain: domain address to check
+    	-ip: ip address of the domain you want to check
+	Returns a dictionary with the list of nameservers and whether or not I use cloudflare
+    Ej: {'nameservers': ['jocelyn.ns.cloudflare.com.', 'dave.ns.cloudflare.com.'], 'cloudflare': True}
+	__author__:AllPentesting
+	"""
+    dict_cloudflare={}
+    
+    #We get the domain nameserver and add them to the dictionary
+    array_nameservers=[]
+    nameservers=dns.resolver.query(domain,'NS')
+    for name in nameservers:
+        #print (name)
+        array_nameservers.append(str(name))
 
+    dict_cloudflare.update({'nameservers':array_nameservers})
+    
+    # Read the list of IPv4 domains where cloudflare is dynamically
     r=requests.get("https://www.cloudflare.com/ips-v4")
     cloudflare_ips=r.text.strip().split("\n")
 
@@ -101,9 +124,64 @@ def __check_cloudflare(ip):
         netaddr = int(''.join(['%02x' % int(x) for x in netstr.split('.')]), 16)
         mask = (0xffffffff << (32 - int(bits))) & 0xffffffff
         if (ipaddr & mask) == (netaddr & mask):
-            return True
-    return False
+            cloudflareOn=True
+            dict_cloudflare.update({"cloudflare":cloudflareOn})
+            return dict_cloudflare
 
+    dict_cloudflare.update({"cloudflare":False})
+    return dict_cloudflare
+
+
+def __check_share_hosting(ip):
+    """
+    Function to check if a hosting is share or dedicated
+    Parameters: 
+        -ip: ip address of the domain you want to check
+    Return a dictionary with the hosting if it is share or dedicated, the number of domains and an array of domains
+    Ej: {'share': True, 'size': 6, 'domains': ['jairukclinic.com', 'strengthauthority.com', 'clubmusicdownload.com', 'co.uk', 'trikalanews.gr', 'qurtuba.es']}
+    __author__:AllPentesting
+    """
+    dict_share={}
+
+    #Send request to BING with the ip parameter:
+    headers = {"Ocp-Apim-Subscription-Key": BING_API_KEY}
+    params = {"q": "ip:"+ip, "textDecorations": True, "textFormat": "HTML"}
+    response = requests.get("https://api.cognitive.microsoft.com/bing/v7.0/search",headers=headers, params=params)
+    search_results = response.json()
+
+    #Check if the key exists in the json
+    if "webPages" in search_results:
+        
+        size=len(search_results['webPages']['value'])
+        domains=[]
+
+        #We are going to clean up all the domains that are hosted on that IP
+        for i in range(0,size):
+            
+            # We take from the // of the prince to the next
+            domain=search_results['webPages']['value'][i]['url'].split("//")[1].split("/")[0]
+
+            #We clean subdomains
+            if len(domain.split("."))>2:
+                size2=len(domain.split("."))
+                domain=domain.split(".")[size2-2]+"."+domain.split(".")[size2-1]
+                domains.append(domain)
+            else:
+                domains.append(domain)
+        
+        # We get only the list of domains that are not repeated and the size of it
+        unicos=list(set(domains))
+        size3=len(unicos)
+        if size3>1:
+            share=True
+        else:
+            share=False
+        
+        dict_share.update({'share':share, 'size':size3, 'domains':unicos})
+    else:
+        dict_share.update({'share':None, 'size':None, 'domains':None})
+
+    return dict_share
 
 def __analyze_FTP(domain):
     """

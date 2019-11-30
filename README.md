@@ -1,32 +1,37 @@
 # AllIntelligence
 
 
-### Descripción
-La herramienta AllIntelligence nos permitirá tener una visión general de posibles vectores de ataque de una organización. Como input de entrada le facilitaremos un dominio, del cual obtendremos información desde dos puntos de vista:
-1. Nivel técnico: puertos abiertos, servicios expuestos y posibles vulnerabilidades de los mismos. Como por ejemplo servicios de correo vulnerables a suplantación de indentidad, tecnologías web vulnerables (Wordpress, Joomla u otro CMS vulnerable) y otros servicios expuestos.
-2. Nivel de Identidad Digital: donde analizaremos posibles fugas de información de correos electrónicos asociados a la organización y redes sociales de estos que puedan dar información útil para un atacante.
-Todo ello de cara a analizar la cantidad de información que un atacante podría obtener de nuestra organización a la hora de realizar un APT.
+### Description
+The AllIntelligence tool allows us to have an overview of possible attack vectors of an organization. As input you provide a domain, from which we will obtain information from two points of view:
 
-### Descarga
-Para descargar este proyecto ejecutamos los siguientes comandos: 
+1. Technical level: open ports, located services and possible vulnerabilities. Such as email services vulnerable to phishing, vulnerable web technologies (Wordpress, Joomla or other vulnerable CMS) and other affected services.
+
+2. Level of Digital Identity: where we will analyze possible leaks of email information associated with the organization and social networks of these that can provide useful information for an attacker.
+
+All this in order to analyze the amount of information that an attacker could obtain from our organization when making an APT.
+
+### Download
+To download this project we execute the following commands:
 
 ```sh
 git clone https://github.com/AllPentesting/AllIntelligence.git
 cd AllIntelligence
 ```
-Esto descargará el proyecto actual y nos creará la carpeta **AllIntelligence** con la herramienta.
+This will download the current project and create the **AllIntelligence** folder with the tool.
 
-### Objetivos
+You can find more information on the [Wiki](https://github.com/AllPentesting/AllIntelligence/wiki).
 
-Objetivos a conseguir:
+### Objectives
 
-| Objetivos | Estado |
+Objectives to achieve:
+
+| Objectives | Status |
 | ------ | ------ |
-| Interfaz web con Flask |![img](http://i.imgur.com/kR8HJwg.png) |
-| API de Shodan |![img](http://i.imgur.com/kR8HJwg.png) |
-| API de Hunter.io |![img](http://i.imgur.com/VJ7IoXU.png) |
-| API de Dehashed |![img](http://i.imgur.com/VJ7IoXU.png) |
-| API de MaxMind |![img](http://i.imgur.com/kR8HJwg.png) |
-| API de Pipl |![img](http://i.imgur.com/kR8HJwg.png) |
-| Testing manual |![img](http://i.imgur.com/kR8HJwg.png) |
-| Generación de informes |![img](http://i.imgur.com/kR8HJwg.png) |
+| Web interface with Flask |![img](http://i.imgur.com/kR8HJwg.png) |
+| Shodan API |![img](http://i.imgur.com/VJ7IoXU.png) |
+| Hunter.io API |![img](http://i.imgur.com/VJ7IoXU.png) |
+| Dehashed API |![img](http://i.imgur.com/VJ7IoXU.png) |
+| MaxMind API |![img](http://i.imgur.com/VJ7IoXU.png) |
+| Pipl API |![img](http://i.imgur.com/VJ7IoXU.png) |
+| Testing manual |![img](http://i.imgur.com/VJ7IoXU.png) |
+| Report generation |![img](http://i.imgur.com/kR8HJwg.png) |

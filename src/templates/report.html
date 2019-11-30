@@ -226,19 +226,20 @@
         <div class="card card-report">
             <div class="card-body">
                 <h3>Technical Information</h3>
-                <ul>
-                    <li>Emails...: google.es</li>
-                    <li>aaa</li>
-                    <li></li>
-                    <li></li>
+                <ul class="list-info">
+                    <li><strong>City: </strong>{{ tech_information.city.name }}</li>
+                    <li><strong>Fiablidad: </strong> {{ tech_information.city.confidence }}%</li>
+                    <li><strong>Continent:</strong> {{ tech_information.continent.name }}</li>
+                    <li><strong>Country:</strong> {{ tech_information.country.name }}</li>
+                    <li><strong>Latitude:</strong> {{ tech_information.location.latitude }}</li>
+                    <li><strong>Longitude:</strong> {{ tech_information.location.longitude }}</li>
+                    <li><strong>Accuracy:</strong> {{ tech_information.location.accuracy_radius }}</li>
+
+
                 </ul>
             </div>
         </div>
-
-
     </div>
-
-
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">

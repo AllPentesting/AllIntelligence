@@ -1,8 +1,8 @@
 import requests
-from config import PIPL_API_KEY
+from allintelligence.config import PIPL_API_KEY
 
 """
-Módulo de interconexión con la API de Pipl para obtener información sobre las identidades digitales a partir de un email
+Pipl module to obtain information about a person from an email
 
 __author__:AllPentesting
 """
@@ -10,97 +10,109 @@ __author__:AllPentesting
 
 def petition(email):
     """
-    Función que concecta con la API Pipl y nos devuelve una serie de información a partir de de un email que se le pasa
-    Parametros:
-        - email: correo de la persona que buscamos información
-
+    Function that contracts with the API Pipl and returns a series of information from an email that is passed
+    Parameters:
+        - email: mail of the person we are looking for information
     """
     response = requests.get("https://api.pipl.com/search/?email="+email+"&key="+PIPL_API_KEY)
-
     return __parser(response.json())
-
 
 def __parser(info_pipl):    
     """
-    Función encargada de interpretar el json obtenido mediante requests y devuelve un diccionario con los datos de Pypl.
-    Parametros:
-        - info_pipl: JSON que nos proporciona pipl
+    Function responsible for interpreting the json obtained through requests and returns a dictionary with Pypl data.
+    Parameters:
+        - info_pipl: JSON that gives us pipl
     """
     try:
-        #Diccionario principal con toda la información de pipl
+        # Main dictionary with all the pipl information
         dict_pipl = {}
 
-
         array_usernames = []
+        for username in info_pipl["person"].get("usernames",[]):
+            array_usernames.append(username.get("content", None))
+        array_usernames = list(filter(None.__ne__, array_usernames))
+        if(len(array_usernames) == 0):
+            array_usernames = []
 
-        for username in info_pipl["person"].get("usernames",None):
-            array_usernames.append(username["content"])
-
-        #Añadimos el array de usernames al diccionario principal de Pipl
+        # We add the array of usernames to the main Pipl dictionary
         dict_pipl.update({"usernames":array_usernames})
 
 
         array_emails = []
 
-        for email in info_pipl["person"].get("emails", None):
-            array_emails.append(email["address"])
-
-        #Añadimos el diccionario de emails al diccionario principal de Pipl
+        for email in info_pipl["person"].get("emails", []):
+            array_emails.append(email.get("address", None))
+        
+        array_emails = list(filter(None.__ne__, array_emails))
+        if(len(array_emails) == 0):
+            array_emails = []
+            
+        # We add the email dictionary to the main Pipl dictionary
         dict_pipl.update({"emails":array_emails})
 
 
         array_addresses = []
 
-        for address in info_pipl["person"].get("addresses", None):
-            array_addresses.append(address["display"])
+        for address in info_pipl["person"].get("addresses", []):
+            array_addresses.append(address.get("display", None))
 
-        #Añadimos el array de addresses al diccionario principal de Pipl
+        array_addresses = list(filter(None.__ne__, array_addresses))
+        if(len(array_addresses) == 0):
+            array_addresses = []
+
+        # We add the array of addresses to the main Pipl dictionary
         dict_pipl.update({"addresses":array_addresses})
 
 
         array_phones = []
 
-        for phone in info_pipl["person"].get("phones", None):
-            array_phones.append(phone["display_international"])
+        for phone in info_pipl["person"].get("phones", []):
+            array_phones.append(phone.get("display_international", None))
 
-        #Añadimos el array de phones al diccionario principal de Pipl
+        array_phones = list(filter(None.__ne__, array_phones))
+        if(len(array_phones) == 0):
+            array_phones = []
+
+        # We add the array of phones to the main Pipl dictionary
         dict_pipl.update({"phones":array_phones})
 
 
         array_jobs = []
 
-        for job in info_pipl["person"].get("jobs", None):
-            array_jobs.append(job["display"])
+        for job in info_pipl["person"].get("jobs", []):
+            array_jobs.append(job.get("display", None))
+        array_jobs = list(filter(None.__ne__, array_jobs))
+        if(len(array_jobs) == 0):
+            array_jobs = []
 
-        #Añadimos el array de jobs al diccionario principal de Pipl
+        # We add the array of jobs to the main Pipl dictionary
         dict_pipl.update({"jobs":array_jobs})
 
 
-        dict_images = []
+        array_images = []
 
-        for img in info_pipl["person"].get("images", None):
-            check_image = requests.get(img["url"])
-            if check_image.status_code == 200:
-                dict_images.append({
-                    "@last_seen": img["@last_seen"],
-                    "url":img["url"]
-                })
+        for img in info_pipl["person"].get("images", []):
+            image = img.get("urls", None)
+            if(image != None):
+                check_image = requests.get(image)
+                if check_image.status_code == 200:
+                    array_images.append(img.get("urls", None))
 
-        #Añadimos el diccionario de images al diccionario principal de Pipl
-        dict_pipl.update({"images":dict_images})
+        # We add the images dictionary to the main Pipl dictionary
+        dict_pipl.update({"images":array_images})
 
+        array_urls = []
 
-        dict_urls = []
+        for url in info_pipl["person"].get("urls", {}):
+            array_urls.append([url.get("url", None)])
+        array_urls = list(filter(None.__ne__, array_urls))
+        if(len(array_urls) == 0):
+            array_urls = []
 
-        for url in info_pipl["person"].get("urls", None):
-            dict_urls = {
-                "@category": url.get("@category",None),
-                "url": url["url"]
-            }
-
-        #Añadimos el diccionario de urls al diccionario principal de Pipl
-        dict_pipl.update({"urls":dict_urls})
+        # We add the urls dictionary to the main Pipl dictionary
+        dict_pipl.update({"urls":array_urls})
 
         return dict_pipl
     except Exception:
+        print(info_pipl)
         return {"error":info_pipl["@http_status_code"]}

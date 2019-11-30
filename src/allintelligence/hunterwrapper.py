@@ -4,16 +4,17 @@ import pyhunter
 from allintelligence.config import HUNTER_API_KEY
 
 """
-Módulo de hunter.io para obtener correos de una organización.
+Module hunter.io to get emails from an organization.
 
 __author__: AllPentesting
 """
 
 def petition(domain):
     """
-    Función encargada de realizar una petición a hunter.io.
-    Parametros:
-        - domain: Dominio de el que se van a obtener correos.
+    Function that makes a request to hunter.io
+
+    Parameters:
+            - domain: Domain from which mails will be obtained.
     """
     response = requests.get("https://api.hunter.io/v2/domain-search?domain="+domain+"&limit=20&api_key="+HUNTER_API_KEY)
     try:
@@ -30,19 +31,56 @@ def __parser(emails):
         dict_mails = {}
         dict_mails.update({"organization":emails["data"]["organization"]})
         array_mails = []
-        #Accedemos al array de emails
+        # We access the email array
         for email in emails["data"]["emails"]:
-            #Creamos el diccionario del email
-            dict_mail = {"email" : email["value"], "type":email["type"],"confidence":email["confidence"],"first_name":[email["first_name"]],"last_name":[email["last_name"]],"position":email["position"],"seniority":email["seniority"],"department":email["department"],"linkedin":[email["linkedin"]],"twitter":[email["twitter"]],"phone_number":[email["phone_number"]]}
+            # We create the email dictionary
+            dict_mail = {"email" : [], "type": None,"confidence": None,"first_name": None,"last_name": None,"position": None,"seniority":None,"department":None,"linkedin":None,"twitter":None,"phone_number":[]}
+            
+            if(email["value"] != []):
+                dict_mail.update({"email" : [email["value"]]})
+            
+            if(email["type"] != None):
+                dict_mail.update({"type": email["type"]})
+            
+            if(email["confidence"] != None):
+                dict_mail.update({"confidence": email["confidence"]})
+            
+            if(email["first_name"] != None):
+                dict_mail.update({"first_name": [email["first_name"]]})
+            
+            if(email["last_name"] != None):
+                dict_mail.update({"last_name": [email["last_name"]]})
+            
+            if(email["position"] != None):
+                dict_mail.update({"position": email["position"]})
+            
+            if(email["seniority"] != None):
+                dict_mail.update({"seniority": email["seniority"]})
+            
+            if(email["department"] != None):
+                dict_mail.update({"department": email["department"]})
+
+            if(email["linkedin"] != None):
+                dict_mail.update({"linkedin": [email["linkedin"]]})
+            
+            if(email["twitter"] != None):
+                dict_mail.update({"twitter":[email["twitter"]]})
+            
+            if(email["phone_number"] != None):
+                dict_mail.update({"phone_number":[email["phone_number"]]})
+
+
+            
             sources = []
-            #Accedemos a las fuentes desde donde se ha obtenido la información de ese correo
+            # We access the sources from where the information in that email was obtained
             for source in email["sources"]:
                 sources.append(source["uri"])
             dict_mail.update({"sources":sources})
-            #Agregamos al array de correos el nuevo correo analizado
+            # We add the new analyzed email to the mail array
             array_mails.append(dict_mail)
-        #Una vez recorridos todos los correos añadimos al diccionario el array con los diferentes correos
+        # Once we have traveled all the emails we add the array with the different emails to the dictionary
         dict_mails.update({"emails":array_mails})
+
         return dict_mails
     except Exception:
         return {"error":emails["errors"][0]["details"]}
